@@ -4,7 +4,7 @@
         Vector<Integer> vec = new Vector<>();
 
         for (int i = 0;i<arr.length;i++){
-            while (stk.size()>0 && arr[stk.peek()]>=arr[i]){
+            while (stk.size()>0 && arr[stk.peek()]>=arr[i]){             // to change this to find max just change greater sign into smaller
                 stk.pop();
             }
             if (stk.empty()){
