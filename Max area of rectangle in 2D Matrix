@@ -1,0 +1,80 @@
+class Main{
+    public static int MAH (int[] arr){
+        // for nearest smaller at right 
+
+        Stack<Integer> stk_NSR = new Stack<>();
+        Vector<Integer> vec_NSR = new Vector<>();
+        Vector<Integer> vec_rev_NSR = new Vector<>();
+        for (int i = arr.length-1;i>=0;i--){
+            while (stk_NSR.size()>0 && arr[stk_NSR.peek()]>=arr[i]){
+                stk_NSR.pop();
+            }
+            if (stk_NSR.isEmpty()){
+                vec_NSR.add(arr.length);
+            }
+            else {
+                vec_NSR.add(stk_NSR.peek());
+            }
+            stk_NSR.push(i);
+        }
+        for (int i = vec_NSR.size()-1;i>=0;i--){
+            vec_rev_NSR.add(vec_NSR.get(i));
+        }
+
+        // for nearest smaller at left
+
+        Stack<Integer> stk_NSL = new Stack<>();
+        Vector<Integer> vec_NSL = new Vector<>();
+        for (int i = 0;i<arr.length;i++){
+            while (stk_NSL.size()>0 && arr[stk_NSL.peek()]>=arr[i]){
+                stk_NSL.pop();
+            }
+            if (stk_NSL.isEmpty()){
+                vec_NSL.add(-1);
+            }
+            else {
+                vec_NSL.add(stk_NSL.peek());
+            }
+            stk_NSL.push(i);
+        }
+
+        //  To find Maximum Area of Histogram(mah)
+
+        int mah = 0;
+        Vector<Integer> width = new Vector<>();
+        for (int i = 0; i<vec_NSL.size();i++){
+            width.add(vec_rev_NSR.get(i)-vec_NSL.get(i)-1);
+        }
+        int max = 0;
+        for (int i = 0;i<width.size();i++){
+            int result = width.get(i)*arr[i];
+            if (result>max){
+                max = result;
+            }
+        }
+        mah = max;
+        return mah;
+    }
+
+    public static void main(String[] args) {
+        int[][] arr2d = { {0,1,1,0},     // 0 1 1 0  -> MAH = 2
+                          {1,1,1,1},     // 1,2,2,1  -> MAH = 4
+                          {1,1,1,1},     // 2,4,4,2  -> MAH = 8
+                          {1,1,0,0}  };  // 3,4,0,0  -> MAH = 6 -- so max is 8 (output)
+        int[] cur_row = arr2d[0];
+        int mah = MAH(cur_row);
+        for (int i = 1;i<arr2d.length;i++){
+            for (int j = 0;j< cur_row.length;j++){
+                if (arr2d[i][j] == 1){
+                    cur_row[j] += 1;
+                }
+                else {
+                    cur_row[j] = 0;   // <- 0 is imp
+                }
+            }
+            int Curmax = MAH(cur_row);
+            mah = Math.max(mah,Curmax);
+        }
+        System.out.println(mah);
+    }
+}
