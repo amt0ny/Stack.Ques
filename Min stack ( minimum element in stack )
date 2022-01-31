@@ -1,0 +1,25 @@
+static Stack<Integer> stk ;
+static Stack<Integer> sec_stk ;
+    public int min1(){
+        if (sec_stk.size() == 0){
+            return -1;
+        }
+        return sec_stk.peek();
+    }
+    public void pop1(){
+        int peek = stk.pop();
+        if (peek == sec_stk.peek()){
+            sec_stk.pop();
+        }
+        return;
+    }
+    public void push1(int a){
+        stk.push(a);
+        if (sec_stk.size() == 0 || stk.peek()>sec_stk.peek()){
+            sec_stk.push(a);
+        }
+        return;
+    }
+    
+    // to make this work we should have a pre create 2 stacks 
+    // those stack should not stacks that java provides us
