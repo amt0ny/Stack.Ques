@@ -1,0 +1,61 @@
+class Stack{
+    static int size = 0;
+    static class node{
+        int data;
+        node next;
+        node(int data){
+            this.data = data;
+            this.next = null;
+        }
+    }
+    static class stack {
+        static node head;
+        public boolean isempty(){
+            if(head == null){
+                return true;
+            }
+            return false;
+        }
+        public void push(int data){
+            node newnode = new node(data);
+            if (isempty()){
+                head = newnode;
+                size++;
+                return;
+            }
+            newnode.next = head;
+            head = newnode;
+            size++;
+        }
+        public int pop(){
+            if (head == null){
+                return -1;
+            }
+            node storehead = head;
+            head = head.next;
+            size--;
+            return storehead.data;
+        }
+        public int peek(){
+            if (isempty()){
+                return -1;
+            }
+            return head.data;
+        }
+    }
+
+        public static void main(String[] args) {
+            stack stk = new stack();//                      |___|
+            stk.push(1);//                                  |_4_|
+            stk.push(2);//                                  |_3_|
+            stk.push(3);//                                  |_2_|
+            stk.push(4);//                                  |_1_|
+
+            while (!stk.isempty()){
+                System.out.println("size is " + size);
+                System.out.println(stk.peek()+ " is on top");
+                System.out.println();
+                stk.pop();
+            }
+        }
+}
